@@ -101,16 +101,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <span class="cart-badge" id="cart-item-count"><?= getCartItemCount(); ?></span>
                     </a>
 
-                    <!-- User Account / Admin Links -->
-                    <?php if (isLoggedIn()): ?>
-                        <?php if (isAdmin()): ?>
-                            <a href="admin/index.php" class="user-btn" style="background: #1e293b; color: #ffffff;">Admin Panel</a>
-                        <?php else: ?>
-                            <span class="user-btn">Hi, <?= htmlspecialchars($_SESSION['user_name'] ?? 'Customer'); ?></span>
-                        <?php endif; ?>
+                    <!-- Admin Panel Access (Visible only if Admin is logged in) -->
+                    <?php if (isAdmin()): ?>
+                        <a href="admin/index.php" class="user-btn" style="background: #1e293b; color: #ffffff;">Admin Panel</a>
                         <a href="logout.php" class="user-btn" style="color: #ef4444;" title="Sign Out">Logout</a>
-                    <?php else: ?>
-                        <a href="login.php" class="user-btn">Sign In</a>
                     <?php endif; ?>
 
                 </div>

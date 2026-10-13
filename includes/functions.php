@@ -52,13 +52,36 @@ function validateCsrfToken(?string $token): bool {
 }
 
 /**
- * Format numerical amount into standard USD currency string.
+ * Global Delivery & Shipping Settings
+ */
+if (!defined('SHIPPING_FEE')) {
+    define('SHIPPING_FEE', 30.00); // 30 DH standard delivery
+}
+if (!defined('FREE_SHIPPING_THRESHOLD')) {
+    define('FREE_SHIPPING_THRESHOLD', 300.00); // Free delivery on orders over 300 DH
+}
+
+/**
+ * Calculate delivery fee based on cart subtotal.
+ *
+ * @param float|int $subtotal
+ * @return float Delivery fee in DH (0.0 if free, or SHIPPING_FEE)
+ */
+function calculateShippingFee(float|int $subtotal): float {
+    if ((float)$subtotal <= 0 || (float)$subtotal >= FREE_SHIPPING_THRESHOLD) {
+        return 0.0;
+    }
+    return SHIPPING_FEE;
+}
+
+/**
+ * Format numerical amount into standard Moroccan Dirham (DH) currency string.
  *
  * @param float|int|string $amount Price amount
- * @return string Formatted price string (e.g. "$24.99")
+ * @return string Formatted price string (e.g. "250.00 DH")
  */
 function formatPrice($amount): string {
-    return '$' . number_format((float)$amount, 2);
+    return number_format((float)$amount, 2) . ' DH';
 }
 
 /**

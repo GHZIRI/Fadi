@@ -90,9 +90,9 @@ foreach ($_SESSION['cart'] as $item) {
     $subtotal += ((float)$item['price'] * (int)$item['quantity']);
 }
 
-// Free delivery threshold: Free for orders over $70, otherwise $5.00
-$freeShippingThreshold = 70.0;
-$shippingCost = ($subtotal >= $freeShippingThreshold || $subtotal == 0) ? 0.0 : 5.0;
+// Delivery calculation using global settings (30 DH standard, or Free on orders >= 300 DH)
+$freeShippingThreshold = FREE_SHIPPING_THRESHOLD;
+$shippingCost = calculateShippingFee($subtotal);
 $grandTotal = $subtotal + $shippingCost;
 
 /**
